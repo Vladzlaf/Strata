@@ -1,0 +1,140 @@
+import { useMemo, useState } from 'react'
+
+import { tracks } from '@/entities/track'
+import { ViewSwitcher } from '@/features/view-switcher'
+import { useViewMode } from '@/hooks'
+import { durToSec, fmtTotal } from '@/lib'
+import { TrackColumns } from '@/widgets/track-columns'
+import { TrackGallery } from '@/widgets/track-gallery'
+import { TrackGrid } from '@/widgets/track-grid'
+import { TrackList } from '@/widgets/track-list'
+
+type SortKey = 'strata' | 'title' | 'artist' | 'longest'
+
+const VIEWS = {
+  grid: TrackGrid,
+  list: TrackList,
+  columns: TrackColumns,
+  gallery: TrackGallery,
+} as const
+
+const SORTS: [SortKey, string][] = [
+  ['strata', 'chronology'],
+  ['title', 'title'],
+  ['artist', 'artist'],
+  ['longest', 'longest'],
+]
+
+export function App() {
+  const [q, setQ] = useState('')
+  const [artist, setArtist] = useState('')
+  const [sort, setSort] = useState<SortKey>('strata') // strata = original order
+  const [view, setView] = useViewMode()
+
+  // top artists for the filter chips
+  const topArtists = useMemo(() => {
+    const c = new Map<string, number>()
+    for (const t of tracks) {
+      const a = (t.artist || '').trim()
+      if (!a) continue
+      c.set(a, (c.get(a) || 0) + 1)
+    }
+    return [...c.entries()].sort((a, b) => b[1] - a[1]).slice(0, 24)
+  }, [])
+
+  const filtered = useMemo(() => {
+    const needle = q.trim().toLowerCase()
+    let r = tracks.filter((t) => {
+      if (artist && t.artist !== artist) return false
+      if (!needle) return true
+      return (
+        t.title.toLowerCase().includes(needle) || (t.artist || '').toLowerCase().includes(needle)
+      )
+    })
+    if (sort === 'title') r = [...r].sort((a, b) => a.title.localeCompare(b.title, 'en'))
+    else if (sort === 'artist')
+      r = [...r].sort((a, b) => (a.artist || '').localeCompare(b.artist || '', 'en'))
+    else if (sort === 'longest') r = [...r].sort((a, b) => durToSec(b.dur) - durToSec(a.dur))
+    // 'strata' keeps original json order
+    return r
+  }, [q, artist, sort])
+
+  const totalSec = useMemo(() => filtered.reduce((s, t) => s + durToSec(t.dur), 0), [filtered])
+
+  const ActiveView = VIEWS[view]
+
+  return (
+    <div className="app">
+      <header className="masthead">
+        <div className="masthead__brand">
+          <h1 className="wordmark">STRATA</h1>
+          <p className="tagline">Every track in the order it settled.</p>
+        </div>
+        <dl className="counters">
+          <div>
+            <dt>records</dt>
+            <dd>{tracks.length.toLocaleString('en')}</dd>
+          </div>
+          <div>
+            <dt>shown</dt>
+            <dd>{filtered.length.toLocaleString('en')}</dd>
+          </div>
+          <div>
+            <dt>playtime</dt>
+            <dd>{fmtTotal(totalSec)}</dd>
+          </div>
+        </dl>
+      </header>
+
+      <div className="controls">
+        <input
+          className="search"
+          placeholder="search by title or artist…"
+          type="search"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+        />
+        <div className="sortgroup">
+          {SORTS.map(([k, label]) => (
+            <button
+              key={k}
+              className={`chip ${sort === k ? 'chip--on' : ''}`}
+              onClick={() => setSort(k)}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        <ViewSwitcher value={view} onChange={setView} />
+      </div>
+
+      <div className="artistbar">
+        <button className={`chip ${artist === '' ? 'chip--on' : ''}`} onClick={() => setArtist('')}>
+          all artists
+        </button>
+        {topArtists.map(([a, n]) => (
+          <button
+            key={a}
+            className={`chip ${artist === a ? 'chip--on' : ''}`}
+            title={`${n} tracks`}
+            onClick={() => setArtist(artist === a ? '' : a)}
+          >
+            {a} <span className="chip__n">{n}</span>
+          </button>
+        ))}
+      </div>
+
+      {filtered.length === 0 ? (
+        <div className="empty">Nothing found. Reset the filter or change your query.</div>
+      ) : (
+        <ActiveView items={filtered} />
+      )}
+
+      <footer className="foot">
+        <span>
+          Strata — a personal archive. Covers and order taken from the original collection.
+        </span>
+      </footer>
+    </div>
+  )
+}
