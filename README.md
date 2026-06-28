@@ -2,7 +2,7 @@
 
 A personal strata of music — every track from the collection in the order it settled. Cover, title, artist, duration. Search, filter by artist, sorting, live counters. Pure front end, no backend
 
-![preview](preview.png)
+![preview](image.png)
 
 ## What's inside
 
