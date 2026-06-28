@@ -2,9 +2,8 @@ import { useMemo, useState } from 'react'
 
 import { tracks } from '@/entities/track'
 import { ViewSwitcher } from '@/features/view-switcher'
-import { useViewMode } from '@/hooks'
+import { useStuck, useViewMode } from '@/hooks'
 import { durToSec, fmtTotal } from '@/lib'
-import { TrackColumns } from '@/widgets/track-columns'
 import { TrackGallery } from '@/widgets/track-gallery'
 import { TrackGrid } from '@/widgets/track-grid'
 import { TrackList } from '@/widgets/track-list'
@@ -14,7 +13,6 @@ type SortKey = 'strata' | 'title' | 'artist' | 'longest'
 const VIEWS = {
   grid: TrackGrid,
   list: TrackList,
-  columns: TrackColumns,
   gallery: TrackGallery,
 } as const
 
@@ -30,6 +28,7 @@ export function App() {
   const [artist, setArtist] = useState('')
   const [sort, setSort] = useState<SortKey>('strata') // strata = original order
   const [view, setView] = useViewMode()
+  const [sentinelRef, stuck] = useStuck<HTMLDivElement>()
 
   // top artists for the filter chips
   const topArtists = useMemo(() => {
@@ -86,7 +85,8 @@ export function App() {
         </dl>
       </header>
 
-      <div className="controls">
+      <div ref={sentinelRef} aria-hidden className="controls-sentinel" />
+      <div className={`controls ${stuck ? 'controls--glass' : ''}`}>
         <input
           className="search"
           placeholder="search by title or artist…"

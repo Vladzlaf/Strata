@@ -101,6 +101,10 @@ body {
 }
 
 /* ---- controls ---------------------------------------------------------- */
+/* zero-height marker right before the sticky bar; drives the glass-on-stick state */
+.controls-sentinel {
+  height: 0;
+}
 .controls {
   display: flex;
   flex-wrap: wrap;
@@ -111,6 +115,28 @@ body {
   top: 0;
   background: linear-gradient(180deg, var(--bg) 70%, transparent);
   z-index: 20;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  transition:
+    top 0.32s ease,
+    padding 0.32s ease,
+    background 0.32s ease,
+    border-color 0.32s ease,
+    box-shadow 0.32s ease,
+    backdrop-filter 0.32s ease;
+}
+
+/* liquid glass: engages once the page is scrolled */
+.controls--glass {
+  top: 10px;
+  padding: 12px 14px;
+  background: rgba(36, 36, 36, 0.5);
+  backdrop-filter: blur(18px) saturate(170%);
+  -webkit-backdrop-filter: blur(18px) saturate(170%);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 10px 34px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 
 .search {
@@ -205,6 +231,19 @@ body {
   overflow: hidden;
   background: var(--bg-2);
   border: 1px solid var(--line);
+}
+/* glass sheen sweeping the cover on hover */
+.card__art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 45%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+.card__art:hover::after {
+  opacity: 1;
 }
 .cover {
   width: 100%;
@@ -391,94 +430,6 @@ body {
   color: var(--ink-faint);
 }
 
-/* ---- columns view ------------------------------------------------------ */
-.tcol {
-  display: grid;
-  grid-template-columns: minmax(180px, 280px) 1fr;
-  gap: 1px;
-  height: 70vh;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: var(--line);
-}
-.tcol__pane {
-  overflow-y: auto;
-  padding: 6px;
-  background: var(--bg);
-}
-.tcol__artists {
-  background: var(--bg-2);
-}
-.tcol__item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  width: 100%;
-  padding: 8px 10px;
-  border: 0;
-  border-radius: 7px;
-  background: transparent;
-  color: var(--ink-dim);
-  text-align: left;
-  font-size: 13px;
-  cursor: pointer;
-}
-.tcol__item:hover {
-  background: var(--bg-3);
-  color: var(--ink);
-}
-.tcol__item--on {
-  background: var(--accent);
-  color: #0e1726;
-}
-.tcol__name {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.tcol__count {
-  flex: none;
-  font-family: 'Space Mono', monospace;
-  font-size: 11px;
-  opacity: 0.7;
-}
-.tcol__track {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 7px 8px;
-  border-radius: 7px;
-}
-.tcol__track:hover {
-  background: var(--bg-2);
-}
-.tcol__thumb {
-  flex: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 6px;
-  overflow: hidden;
-  background: var(--bg-2);
-  border: 1px solid var(--line);
-}
-.tcol__ttitle {
-  flex: 1 1 auto;
-  min-width: 0;
-  font-size: 13px;
-  color: var(--ink);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.tcol__tdur {
-  flex: none;
-  font-family: 'Space Mono', monospace;
-  font-size: 11px;
-  color: var(--ink-faint);
-}
-
 /* ---- gallery view ------------------------------------------------------ */
 .tgal {
   display: flex;
@@ -536,7 +487,11 @@ body {
   gap: 8px;
   overflow-x: auto;
   padding: 8px 2px;
-  scrollbar-width: thin;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* old Edge/IE */
+}
+.tgal__strip::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Edge */
 }
 .tgal__thumb {
   flex: none;
@@ -551,6 +506,67 @@ body {
 }
 .tgal__thumb--on {
   border-color: var(--accent);
+}
+
+/* ---- youtube link ------------------------------------------------------ */
+.yt {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink-dim);
+  text-decoration: none;
+  transition:
+    color 0.14s,
+    background 0.14s,
+    border-color 0.14s,
+    opacity 0.14s;
+}
+.yt:hover {
+  color: #ff3d3d;
+}
+.yt__label {
+  font-size: 13px;
+}
+
+/* grid: overlay on the cover, revealed on hover */
+.card__yt {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: rgba(26, 26, 26, 0.72);
+  color: var(--ink);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+}
+.card__art:hover .card__yt,
+.card__yt:focus-visible {
+  opacity: 1;
+}
+
+/* list: trailing icon */
+.tlist__yt {
+  flex: none;
+  justify-content: center;
+  width: 26px;
+}
+
+/* gallery: labeled pill */
+.tgal__yt {
+  align-self: flex-start;
+  margin-top: 6px;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--ink);
+}
+.tgal__yt:hover {
+  color: #ff3d3d;
+  border-color: #ff3d3d;
 }
 
 /* ---- motion / a11y ----------------------------------------------------- */

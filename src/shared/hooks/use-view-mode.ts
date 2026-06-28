@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 
-export type ViewMode = 'grid' | 'list' | 'columns' | 'gallery'
+export type ViewMode = 'grid' | 'list' | 'gallery'
 
-export const VIEW_MODES: ViewMode[] = ['grid', 'list', 'columns', 'gallery']
+export const VIEW_MODES: ViewMode[] = ['grid', 'list', 'gallery']
 
 const KEY = 'strata:view'
 

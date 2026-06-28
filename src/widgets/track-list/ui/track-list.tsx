@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { Cover } from '@/components'
+import { Cover, YoutubeLink } from '@/components'
 import type { Track } from '@/entities/track'
 import { BASE } from '@/shared/config'
 
@@ -55,6 +55,7 @@ export function TrackList({ items }: TrackListProps) {
             <span className="tlist__artist" title={t.artist}>
               {t.artist || '—'}
             </span>
+            <YoutubeLink className="tlist__yt" query={`${t.artist} ${t.title}`} />
             <span className="tlist__dur">{t.dur}</span>
           </div>
         )

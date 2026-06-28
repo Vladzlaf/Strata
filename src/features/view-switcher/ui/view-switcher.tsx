@@ -27,14 +27,6 @@ const ListIcon = () => (
   </svg>
 )
 
-const ColumnsIcon = () => (
-  <svg aria-hidden fill="currentColor" height="16" viewBox="0 0 16 16" width="16">
-    <rect height="14" rx="1" width="4" x="1" y="1" />
-    <rect height="14" rx="1" width="4" x="6" y="1" />
-    <rect height="14" opacity="0.5" rx="1" width="4" x="11" y="1" />
-  </svg>
-)
-
 const GalleryIcon = () => (
   <svg aria-hidden fill="currentColor" height="16" viewBox="0 0 16 16" width="16">
     <rect height="9" rx="1.5" width="12" x="2" y="1" />
@@ -47,7 +39,6 @@ const GalleryIcon = () => (
 const OPTIONS: { mode: ViewMode; label: string; Icon: () => ReactNode }[] = [
   { mode: 'grid', label: 'Icons', Icon: GridIcon },
   { mode: 'list', label: 'List', Icon: ListIcon },
-  { mode: 'columns', label: 'Columns', Icon: ColumnsIcon },
   { mode: 'gallery', label: 'Gallery', Icon: GalleryIcon },
 ]
 

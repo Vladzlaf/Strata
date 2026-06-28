@@ -6,10 +6,12 @@ A personal strata of music — every track from the collection in the order it s
 
 ## What's inside
 
-- **React + Vite** — a single SPA, built to static files.
-- **`src/entities/track/model/tracks.json`** — all tracks: `{ n, artist, title, dur, cover }`. Array order = collection chronology.
-- **`public/covers/NNNN.jpg`** — covers, file name = track number with leading zeros (`0001.jpg`).
-- **Virtualization** — only visible cards are rendered, so 2000+ covers stay smooth.
+- **React + TypeScript + Vite** — a single SPA, built to static files; organized with Feature-Sliced Design (`app`, `features`, `widgets`, `entities`, `shared`).
+- **`src/entities/track/model/tracks.json`** — all tracks: `{ n, artist, title, dur, cover }`. Array order = collection chronology; `n` is a continuous 1…N sequence.
+- **`public/covers/NNNN.jpg`** — covers, referenced by each track's `cover` field. Filenames keep their original numbers, so they don't necessarily match `n`.
+- **Three views** — icons, list, and gallery, switchable from the toolbar; the choice is remembered between visits. Gallery flips through tracks with the ← / → arrow keys.
+- **Find on YouTube** — every track links to a YouTube search for `artist title` (no API key, pure static).
+- **Virtualization** — in the grid and list only visible items are rendered, so 2000+ covers stay smooth.
 - Default/broken covers are replaced with a `♪` placeholder automatically.
 
 ## Run locally
