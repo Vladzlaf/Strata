@@ -1,7 +1,3 @@
-// One-time (re-runnable) upload of the collection metadata into Firestore.
-// Usage:
-//   GOOGLE_APPLICATION_CREDENTIALS=/path/to/serviceAccount.json node scripts/upload-tracks.mjs
-// or place the key at ./serviceAccount.json and just run `pnpm upload-tracks`.
 import { readFileSync } from 'node:fs'
 
 import { cert, initializeApp } from 'firebase-admin/app'

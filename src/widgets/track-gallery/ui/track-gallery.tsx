@@ -8,12 +8,11 @@ interface TrackGalleryProps {
   items: Track[]
 }
 
-// large preview + horizontal filmstrip, like Finder's gallery view
 export function TrackGallery({ items }: TrackGalleryProps) {
   const [sel, setSel] = useState(0)
   const stripRef = useRef<HTMLDivElement>(null)
 
-  const idx = Math.min(sel, items.length - 1) // clamp when the filtered set shrinks
+  const idx = Math.min(sel, items.length - 1)
   const active = items[idx]
 
   const go = useCallback(
@@ -21,7 +20,6 @@ export function TrackGallery({ items }: TrackGalleryProps) {
     [items.length],
   )
 
-  // arrow keys flip through tracks (unless the search box is focused)
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const el = document.activeElement
@@ -38,7 +36,6 @@ export function TrackGallery({ items }: TrackGalleryProps) {
     return () => window.removeEventListener('keydown', onKey)
   }, [go])
 
-  // keep the active thumbnail in view
   useEffect(() => {
     const thumb = stripRef.current?.children[idx] as HTMLElement | undefined
     thumb?.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' })

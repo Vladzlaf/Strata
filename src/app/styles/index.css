@@ -1,21 +1,17 @@
-/* ============================================================
-   STRATA — visual identity
-   palette: graphite grey + cool steel-blue
-   ============================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@600;700;800&family=Space+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap');
 
 :root {
-  --bg: #1a1a1a; /* deepest graphite */
-  --bg-2: #242424; /* card bed */
-  --bg-3: #2e333d; /* hover / chip, slight blue lift */
-  --line: #343b47; /* steel-blue hairline divider */
-  --ink: #d6deec; /* soft blue-white */
-  --ink-dim: #9aa6bd; /* muted steel-blue */
+  --bg: #1a1a1a;
+  --bg-2: #242424;
+  --bg-3: #2e333d;
+  --line: #343b47;
+  --ink: #d6deec;
+  --ink-dim: #9aa6bd;
   --ink-faint: #646e83;
-  --accent: #6ea8fe; /* cool steel-blue */
+  --accent: #6ea8fe;
   --accent-dim: #3a4a6b;
-  --radius: 10px; /* inputs, cards, panels */
-  --radius-sm: 8px; /* small controls: chips, switcher buttons */
+  --radius: 10px;
+  --radius-sm: 8px;
 }
 
 * {
@@ -42,7 +38,6 @@ body {
   padding: 0 24px 80px;
 }
 
-/* ---- auth gate / loading ----------------------------------------------- */
 .gate {
   position: relative;
   display: grid;
@@ -52,8 +47,7 @@ body {
   padding: 24px;
   overflow: hidden;
 }
-/* two soft colour fields behind the glass, slowly drifting so the blur shimmers.
-   transform-only animation = compositor-cheap and smooth in Safari. */
+
 .gate::before,
 .gate::after {
   content: '';
@@ -216,7 +210,7 @@ body {
   font-family: 'Space Mono', monospace;
   font-size: 12px;
 }
-/* compact on phones so it fits the viewport even with the keyboard open */
+
 @media (max-width: 560px) {
   .gate {
     padding: 16px;
@@ -230,7 +224,6 @@ body {
   }
 }
 
-/* ---- masthead ---------------------------------------------------------- */
 .masthead {
   display: flex;
   flex-wrap: wrap;
@@ -248,7 +241,7 @@ body {
   letter-spacing: 0.04em;
   line-height: 0.9;
   margin: 0;
-  /* stacked strata in the letterforms */
+
   background: linear-gradient(
     180deg,
     var(--ink) 0%,
@@ -291,7 +284,6 @@ body {
   color: var(--accent);
 }
 
-/* ---- stats ------------------------------------------------------------- */
 .masthead__meta {
   display: flex;
   align-items: flex-end;
@@ -406,8 +398,6 @@ body {
   text-align: right;
 }
 
-/* ---- controls ---------------------------------------------------------- */
-/* zero-height marker right before the sticky bar; drives the glass-on-stick state */
 .controls-sentinel {
   height: 0;
 }
@@ -432,7 +422,6 @@ body {
     backdrop-filter 0.32s ease;
 }
 
-/* liquid glass: engages once the page is scrolled */
 .controls--glass {
   top: 10px;
   padding: 12px 14px;
@@ -447,7 +436,7 @@ body {
 
 .search {
   flex: 1 1 280px;
-  min-width: 0; /* let the input shrink so it shares the row instead of wrapping */
+  min-width: 0;
   background: var(--bg-2);
   border: 1px solid var(--line);
   color: var(--ink);
@@ -515,7 +504,6 @@ body {
   margin-bottom: 22px;
 }
 
-/* ---- virtualized grid -------------------------------------------------- */
 .grid {
   position: relative;
   width: 100%;
@@ -525,7 +513,6 @@ body {
   overflow: hidden;
 }
 
-/* ---- card -------------------------------------------------------------- */
 .card {
   margin: 0;
   display: flex;
@@ -540,7 +527,7 @@ body {
   background: var(--bg-2);
   border: 1px solid var(--line);
 }
-/* glass sheen sweeping the cover on hover */
+
 .card__art::after {
   content: '';
   position: absolute;
@@ -558,7 +545,7 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
-  /* covers are tiny 68px — let them scale crisply */
+
   image-rendering: -webkit-optimize-contrast;
 }
 .cover--missing {
@@ -595,7 +582,7 @@ body {
   gap: 1px;
   padding: 8px 2px 0;
   min-width: 0;
-  /* fixed block matching META_H in track-grid.tsx so tall titles can't overflow */
+
   height: 74px;
   overflow: hidden;
 }
@@ -625,7 +612,6 @@ body {
   margin-top: 2px;
 }
 
-/* ---- empty / footer ---------------------------------------------------- */
 .empty {
   padding: 80px 0;
   text-align: center;
@@ -641,11 +627,10 @@ body {
   font-family: 'Space Mono', monospace;
 }
 
-/* ---- view switcher ----------------------------------------------------- */
 .viewswitch {
   display: flex;
   align-items: center;
-  align-self: stretch; /* match the search input height */
+  align-self: stretch;
   gap: 2px;
   margin-left: auto;
   padding: 3px 6px;
@@ -678,7 +663,6 @@ body {
   color: #0e1726;
 }
 
-/* ---- list view --------------------------------------------------------- */
 .tlist {
   position: relative;
   width: 100%;
@@ -742,7 +726,6 @@ body {
   color: var(--ink-faint);
 }
 
-/* ---- gallery view ------------------------------------------------------ */
 .tgal {
   display: flex;
   flex-direction: column;
@@ -799,11 +782,11 @@ body {
   gap: 8px;
   overflow-x: auto;
   padding: 8px 2px;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* old Edge/IE */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 .tgal__strip::-webkit-scrollbar {
-  display: none; /* Chrome/Safari/Edge */
+  display: none;
 }
 .tgal__thumb {
   flex: none;
@@ -820,7 +803,6 @@ body {
   border-color: var(--accent);
 }
 
-/* ---- service links (YouTube / Yandex Music) ---------------------------- */
 .svclinks {
   display: inline-flex;
   align-items: center;
@@ -850,7 +832,6 @@ body {
   font-size: 13px;
 }
 
-/* grid: overlay on the cover, revealed on hover */
 .card__links {
   position: absolute;
   top: 6px;
@@ -868,13 +849,11 @@ body {
   opacity: 1;
 }
 
-/* list: trailing icons */
 .tlist__links {
   flex: none;
   gap: 8px;
 }
 
-/* gallery: labeled pills */
 .tgal__actions {
   display: flex;
   flex-wrap: wrap;
@@ -903,7 +882,6 @@ body {
   border-color: #1db954;
 }
 
-/* ---- favorite star ----------------------------------------------------- */
 .fav {
   display: inline-flex;
   align-items: center;
@@ -938,7 +916,6 @@ body {
   stroke: currentColor;
 }
 
-/* grid: overlay top-left, always shown once favorited */
 .card__fav {
   position: absolute;
   top: 6px;
@@ -968,7 +945,6 @@ body {
   height: 22px;
 }
 
-/* ---- scroll to top ----------------------------------------------------- */
 .scrolltop {
   position: fixed;
   right: 20px;
@@ -996,7 +972,6 @@ body {
   transform: translateY(-2px);
 }
 
-/* ---- favorites chip ---------------------------------------------------- */
 .chip--fav {
   color: var(--accent);
 }
@@ -1004,7 +979,6 @@ body {
   color: #0e1726;
 }
 
-/* ---- motion / a11y ----------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -1014,7 +988,6 @@ body {
   }
 }
 
-/* ---- responsive -------------------------------------------------------- */
 @media (max-width: 768px) {
   .app {
     padding: 0 16px 64px;
@@ -1026,7 +999,7 @@ body {
     grid-template-columns: 1fr;
     gap: 18px;
   }
-  /* gallery: stack the cover over the meta, centered */
+
   .tgal__stage {
     flex-direction: column;
     align-items: stretch;
@@ -1047,7 +1020,6 @@ body {
 }
 
 @media (max-width: 560px) {
-  /* brand and counters stack vertically */
   .masthead {
     flex-direction: column;
     align-items: flex-start;
@@ -1064,7 +1036,7 @@ body {
   .counters dd {
     font-size: 17px;
   }
-  /* compact controls: only search + view switcher (same height), sorts hidden on mobile */
+
   .controls {
     gap: 8px;
     padding: 16px 0 10px;
@@ -1079,7 +1051,7 @@ body {
   .sortgroup {
     display: none;
   }
-  /* roomier switcher so the icons aren't cramped against the edges */
+
   .viewswitch {
     padding: 5px 7px;
     gap: 6px;
@@ -1088,7 +1060,7 @@ body {
     width: 34px;
     height: 32px;
   }
-  /* list: tighten and drop the index column */
+
   .tlist__row {
     gap: 10px;
     padding: 0 4px;
@@ -1105,7 +1077,7 @@ body {
   .counters dd {
     font-size: 15px;
   }
-  /* keep the title readable: hide the artist column on the smallest screens */
+
   .tlist__artist {
     display: none;
   }

@@ -59,7 +59,6 @@ export function Collection() {
   const { ids, count } = useFavorites()
   const [showStats, setShowStats] = useState(false)
 
-  // top artists for the filter chips
   const topArtists = useMemo(() => {
     const c = new Map<string, number>()
     for (const t of tracks) {
@@ -84,7 +83,6 @@ export function Collection() {
     else if (sort === 'artist')
       r = [...r].sort((a, b) => (a.artist || '').localeCompare(b.artist || '', 'en'))
     else if (sort === 'longest') r = [...r].sort((a, b) => durToSec(b.dur) - durToSec(a.dur))
-    // 'strata' keeps original json order
     return r
   }, [tracks, q, artist, sort, favOnly, ids])
 

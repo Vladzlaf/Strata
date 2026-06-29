@@ -2,7 +2,6 @@ import { useState } from 'react'
 
 import { signInWithPassword } from '@/lib'
 
-// single-password gate: on success, onAuthStateChanged flips the app into the collection
 export function AuthGate() {
   const [pw, setPw] = useState('')
   const [err, setErr] = useState(false)

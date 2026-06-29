@@ -12,7 +12,6 @@ const REMIX_RE =
 const COLLAB_RE = /\bfeat\.?\b|\bft\.?\b| x | × | vs\.?\b|&/i
 const CYR_RE = /[а-яё]/i
 
-// overview of the whole collection (complements the live counters in the header)
 export function StatsPanel({ tracks }: StatsPanelProps) {
   const s = useMemo(() => {
     const counts = new Map<string, number>()

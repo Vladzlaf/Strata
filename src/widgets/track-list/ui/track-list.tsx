@@ -10,7 +10,6 @@ interface TrackListProps {
 
 const ROW_H = 56
 
-// single-column virtualized list, re-renders only when the visible row window changes
 export function TrackList({ items }: TrackListProps) {
   const wrapRef = useRef<HTMLDivElement>(null)
   const [viewH, setViewH] = useState(typeof window !== 'undefined' ? window.innerHeight : 800)

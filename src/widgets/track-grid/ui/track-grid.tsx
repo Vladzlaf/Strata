@@ -16,10 +16,8 @@ interface Cell {
 
 const GAP = 16
 const MIN_COL = 132
-const META_H = 74 // reserved space for title (2 lines) + artist + duration, keep in sync with css
+const META_H = 74
 
-// renders only rows near the viewport, so 2100+ cards stay smooth.
-// re-renders only when the visible row window changes, not on every scroll frame.
 export function TrackGrid({ items }: TrackGridProps) {
   const wrapRef = useRef<HTMLDivElement>(null)
   const [wrapW, setWrapW] = useState(0)
@@ -36,7 +34,6 @@ export function TrackGrid({ items }: TrackGridProps) {
     return () => window.removeEventListener('resize', measure)
   }, [])
 
-  // rAF-throttled scroll: compute the first visible row from the ref (event time, not render)
   useEffect(() => {
     let raf = 0
     const onScroll = () => {
@@ -63,7 +60,7 @@ export function TrackGrid({ items }: TrackGridProps) {
   const w = wrapW || (typeof window !== 'undefined' ? window.innerWidth : 1000)
   const cols = Math.max(2, Math.floor(w / (MIN_COL + GAP)))
   const cellW = (w - (cols - 1) * GAP) / cols
-  const cardH = cellW + META_H // cover is aspect-ratio 1, so its height equals the cell width
+  const cardH = cellW + META_H
   const rowH = cardH + GAP
 
   const rows = Math.ceil(items.length / cols)

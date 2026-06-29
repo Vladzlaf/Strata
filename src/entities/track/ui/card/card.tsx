@@ -9,7 +9,6 @@ interface CardProps {
   t: Track
 }
 
-// memoized so reused cards don't re-render when the grid's visible window shifts
 export const Card = memo(({ t }: CardProps) => (
   <figure className="card">
     <div className="card__art">

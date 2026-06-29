@@ -1,4 +1,3 @@
-// tiny localStorage-backed store of favorite track numbers, shared via useSyncExternalStore
 const KEY = 'strata:favs'
 
 const load = (): Set<number> => {

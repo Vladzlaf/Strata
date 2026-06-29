@@ -10,8 +10,6 @@ function parse<T extends Record<string, string>>(defaults: T): T {
   return out
 }
 
-// Syncs a flat record of string params to the URL query string (shareable + reload-safe).
-// Params equal to their default are omitted to keep the URL clean. Back/forward re-applies.
 export function useUrlState<T extends Record<string, string>>(defaults: T) {
   const defaultsRef = useRef(defaults)
   const [state, setState] = useState<T>(() => parse(defaults))

@@ -5,8 +5,6 @@ import { defineConfig } from 'vite'
 
 const r = (p: string) => fileURLToPath(new URL(p, import.meta.url))
 
-// base must match your repo name for GitHub Pages: username.github.io/strata/
-// if you deploy to a custom domain or user-page, set base: '/'
 export default defineConfig({
   plugins: [react()],
   base: process.env.GH_PAGES ? '/strata/' : '/',
