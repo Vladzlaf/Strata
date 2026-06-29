@@ -37,11 +37,6 @@ pnpm build
 npx firebase-tools deploy --only hosting
 ```
 
-### Set up CI on your own Firebase project
-
-1. Create a Firebase project with a Hosting site and put its id in `.firebaserc`.
-2. Run `firebase init hosting:github` — it creates the `FIREBASE_SERVICE_ACCOUNT_*` repository secret the workflows use (or add it manually under **Settings → Secrets and variables → Actions**).
-
 ### Base path
 
 `base` in `vite.config.ts` is `/` by default — Firebase serves the app from the root. It switches to `/strata/` only when `GH_PAGES=1` is set, which the legacy `pnpm deploy` (gh-pages) script does. So no config change is needed for Firebase; the `/strata/` path exists only for an optional GitHub Pages build.

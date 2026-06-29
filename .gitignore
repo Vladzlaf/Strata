@@ -4,3 +4,10 @@ dist
 *.log
 .vite
 .firebase
+
+# secrets / private data — must NOT ship to a public repo
+.env.local
+.env.*.local
+serviceAccount.json
+src/entities/track/model/tracks.json
+src/entities/track/model/tracks_v2.json

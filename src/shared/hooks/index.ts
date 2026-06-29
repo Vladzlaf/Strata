@@ -1,3 +1,4 @@
+export * from './use-auth'
 export * from './use-favorites'
 export * from './use-stuck'
 export * from './use-url-state'

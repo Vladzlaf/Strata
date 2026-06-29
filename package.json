@@ -13,9 +13,11 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "upload-tracks": "node scripts/upload-tracks.mjs",
     "deploy": "GH_PAGES=1 pnpm build && gh-pages -d dist"
   },
   "dependencies": {
+    "firebase": "^12.15.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
@@ -32,6 +34,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.3",
     "eslint-plugin-simple-import-sort": "^13.0.0",
+    "firebase-admin": "^14.1.0",
     "gh-pages": "^6.1.1",
     "globals": "^17.7.0",
     "prettier": "^3.9.0",

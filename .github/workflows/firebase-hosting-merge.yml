@@ -17,6 +17,8 @@ jobs:
           node-version: 22
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
       - name: Deploy to Firebase Hosting
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_STRATA_MUSIC }}

@@ -1,5 +1,6 @@
 export * from './duration'
 export * from './favorites-store'
+export * from './firebase'
 export * from './spotify'
 export * from './yandex'
 export * from './youtube'

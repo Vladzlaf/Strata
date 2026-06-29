@@ -42,6 +42,97 @@ body {
   padding: 0 24px 80px;
 }
 
+/* ---- auth gate / loading ----------------------------------------------- */
+.gate {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+.loadscreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 100vh;
+  padding: 24px;
+  color: var(--ink-dim);
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  text-align: center;
+}
+.gate__box {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 320px;
+  text-align: center;
+}
+.gate__brand {
+  margin: 0;
+  font-family: 'Archivo Expanded', sans-serif;
+  font-weight: 800;
+  font-size: 44px;
+  letter-spacing: 0.04em;
+  background: linear-gradient(
+    180deg,
+    var(--ink) 0%,
+    var(--ink) 60%,
+    var(--accent) 60%,
+    var(--accent) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.gate__hint {
+  margin: 0;
+  color: var(--ink-dim);
+  font-size: 14px;
+}
+.gate__input {
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-2);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 15px;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.gate__input:focus {
+  border-color: var(--accent-dim);
+}
+.gate__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: #0e1726;
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: opacity 0.14s;
+}
+.gate__btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.gate__err {
+  margin: 0;
+  color: #ff6b6b;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+}
+
 /* ---- masthead ---------------------------------------------------------- */
 .masthead {
   display: flex;

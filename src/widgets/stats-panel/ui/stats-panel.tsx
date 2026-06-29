@@ -1,10 +1,14 @@
 import { useMemo } from 'react'
 
-import { type Track, tracks } from '@/entities/track'
+import type { Track } from '@/entities/track'
 import { durToSec, fmtClock } from '@/lib'
 
+interface StatsPanelProps {
+  tracks: Track[]
+}
+
 // overview of the whole collection (complements the live counters in the header)
-export function StatsPanel() {
+export function StatsPanel({ tracks }: StatsPanelProps) {
   const s = useMemo(() => {
     const counts = new Map<string, number>()
     let totalSec = 0
@@ -39,7 +43,7 @@ export function StatsPanel() {
       top,
       max: top.length ? top[0][1] : 1,
     }
-  }, [])
+  }, [tracks])
 
   return (
     <section className="stats">
