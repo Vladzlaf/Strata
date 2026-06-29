@@ -541,6 +541,9 @@ body {
 .svc--ym:hover {
   color: #ffcc00;
 }
+.svc--sp:hover {
+  color: #1db954;
+}
 .svc__label {
   font-size: 13px;
 }
@@ -573,11 +576,13 @@ body {
 /* gallery: labeled pills */
 .tgal__actions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 10px;
   margin-top: 6px;
 }
 .svclinks--labeled {
+  flex-wrap: wrap;
   gap: 8px;
 }
 .svclinks--labeled .svc {
@@ -592,6 +597,9 @@ body {
 }
 .svclinks--labeled .svc--ym:hover {
   border-color: #ffcc00;
+}
+.svclinks--labeled .svc--sp:hover {
+  border-color: #1db954;
 }
 
 /* ---- favorite star ----------------------------------------------------- */
