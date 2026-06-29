@@ -5,7 +5,7 @@ import { fetchTracks, type Track } from '@/entities/track'
 import { ExportMenu } from '@/features/export-menu'
 import { ViewSwitcher } from '@/features/view-switcher'
 import { useFavorites, useStuck, useUrlState, useViewMode } from '@/hooks'
-import { durToSec, fmtTotal, signOutUser } from '@/lib'
+import { durToSec, fmtTotal, signOutUser, toast, youtubePlaylistUrl, YT_PLAYLIST_MAX } from '@/lib'
 import { StatsPanel } from '@/widgets/stats-panel'
 import { TrackGallery } from '@/widgets/track-gallery'
 import { TrackGrid } from '@/widgets/track-grid'
@@ -91,6 +91,18 @@ export function Collection() {
 
   const ActiveView = VIEWS[view]
 
+  const openPlaylist = () => {
+    const ids = filtered.map((t) => t.yt).filter((id): id is string => Boolean(id))
+    if (ids.length === 0) {
+      toast('No YouTube links in this selection')
+      return
+    }
+    window.open(youtubePlaylistUrl(ids.slice(0, YT_PLAYLIST_MAX)), '_blank', 'noopener,noreferrer')
+    if (ids.length > YT_PLAYLIST_MAX) {
+      toast(`Opened first ${YT_PLAYLIST_MAX} of ${ids.length}`)
+    }
+  }
+
   if (status === 'loading')
     return (
       <div className="loadscreen">
@@ -140,6 +152,16 @@ export function Collection() {
               <rect height="9" rx="1" width="4" x="3" y="11" />
               <rect height="14" rx="1" width="4" x="10" y="6" />
               <rect height="6" rx="1" width="4" x="17" y="14" />
+            </svg>
+          </button>
+          <button
+            aria-label="Open as YouTube playlist"
+            className="statsbtn"
+            title="Open shown tracks as a YouTube playlist"
+            onClick={openPlaylist}
+          >
+            <svg aria-hidden fill="currentColor" height="16" viewBox="0 0 24 24" width="16">
+              <path d="M23 12s0-3.8-.5-5.6c-.3-1-1-1.8-2-2C18.7 4 12 4 12 4s-6.7 0-8.5.4c-1 .3-1.7 1-2 2C1 8.2 1 12 1 12s0 3.8.5 5.6c.3 1 1 1.8 2 2C5.3 20 12 20 12 20s6.7 0 8.5-.4c1-.3 1.7-1 2-2C23 15.8 23 12 23 12zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z" />
             </svg>
           </button>
           <ExportMenu favoriteIds={ids} tracks={tracks} />

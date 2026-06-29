@@ -4,4 +4,5 @@ export interface Track {
   title: string
   dur: string
   cover: string
+  yt?: string
 }
