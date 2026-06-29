@@ -14,7 +14,8 @@
   --ink-faint: #646e83;
   --accent: #6ea8fe; /* cool steel-blue */
   --accent-dim: #3a4a6b;
-  --radius: 10px;
+  --radius: 10px; /* inputs, cards, panels */
+  --radius-sm: 8px; /* small controls: chips, switcher buttons */
 }
 
 * {
@@ -143,6 +144,7 @@ body {
 
 .search {
   flex: 1 1 280px;
+  min-width: 0; /* let the input shrink so it shares the row instead of wrapping */
   background: var(--bg-2);
   border: 1px solid var(--line);
   color: var(--ink);
@@ -171,7 +173,7 @@ body {
   border: 1px solid var(--line);
   color: var(--ink-dim);
   padding: 8px 13px;
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   font-family: 'Space Mono', monospace;
   font-size: 13px;
   letter-spacing: 0.01em;
@@ -340,9 +342,11 @@ body {
 /* ---- view switcher ----------------------------------------------------- */
 .viewswitch {
   display: flex;
+  align-items: center;
+  align-self: stretch; /* match the search input height */
   gap: 2px;
   margin-left: auto;
-  padding: 3px;
+  padding: 3px 6px;
   background: var(--bg-2);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -353,7 +357,7 @@ body {
   width: 30px;
   height: 28px;
   border: 0;
-  border-radius: 7px;
+  border-radius: var(--radius-sm);
   background: transparent;
   color: var(--ink-dim);
   cursor: pointer;
@@ -566,7 +570,7 @@ body {
   margin-top: 6px;
   padding: 8px 14px;
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: var(--radius);
   background: var(--bg);
   color: var(--ink);
 }
@@ -631,8 +635,29 @@ body {
   .counters dd {
     font-size: 17px;
   }
+  /* compact controls: only search + view switcher (same height), sorts hidden on mobile */
   .controls {
-    gap: 10px;
+    gap: 8px;
+    padding: 16px 0 10px;
+    flex-wrap: nowrap;
+  }
+  .controls--glass {
+    padding: 12px 16px;
+  }
+  .search {
+    flex: 1 1 150px;
+  }
+  .sortgroup {
+    display: none;
+  }
+  /* roomier switcher so the icons aren't cramped against the edges */
+  .viewswitch {
+    padding: 5px 7px;
+    gap: 6px;
+  }
+  .viewswitch__btn {
+    width: 34px;
+    height: 32px;
   }
   /* list: tighten and drop the index column */
   .tlist__row {

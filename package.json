@@ -13,7 +13,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "deploy": "pnpm build && gh-pages -d dist"
+    "deploy": "GH_PAGES=1 pnpm build && gh-pages -d dist"
   },
   "dependencies": {
     "react": "^18.3.1",

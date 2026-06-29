@@ -9,7 +9,7 @@ const r = (p: string) => fileURLToPath(new URL(p, import.meta.url))
 // if you deploy to a custom domain or user-page, set base: '/'
 export default defineConfig({
   plugins: [react()],
-  base: process.env.VERCEL ? '/' : '/strata/',
+  base: process.env.GH_PAGES ? '/strata/' : '/',
   resolve: {
     alias: [
       { find: '@/components', replacement: r('./src/shared/ui') },
