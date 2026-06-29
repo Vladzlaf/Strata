@@ -397,10 +397,9 @@ body {
   font-weight: 700;
   letter-spacing: 0.06em;
   color: var(--ink);
-  background: rgba(26, 26, 26, 0.72);
+  background: rgba(26, 26, 26, 0.85);
   padding: 2px 6px;
   border-radius: 5px;
-  backdrop-filter: blur(2px);
 }
 .card__meta {
   display: flex;
@@ -671,9 +670,8 @@ body {
   gap: 4px;
   padding: 4px 5px;
   border-radius: var(--radius-sm);
-  background: rgba(26, 26, 26, 0.72);
+  background: rgba(26, 26, 26, 0.85);
   color: var(--ink);
-  backdrop-filter: blur(2px);
   opacity: 0;
   transition: opacity 0.14s;
 }
@@ -760,8 +758,7 @@ body {
   width: 28px;
   height: 28px;
   border-radius: var(--radius-sm);
-  background: rgba(26, 26, 26, 0.72);
-  backdrop-filter: blur(2px);
+  background: rgba(26, 26, 26, 0.85);
   opacity: 0;
 }
 .card__art:hover .card__fav,

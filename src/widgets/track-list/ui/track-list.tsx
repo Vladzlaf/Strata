@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Cover, FavoriteStar, MusicLinks } from '@/components'
 import type { Track } from '@/entities/track'
@@ -10,34 +10,44 @@ interface TrackListProps {
 
 const ROW_H = 56
 
-// single-column virtualized list, like Finder's list view
+// single-column virtualized list, re-renders only when the visible row window changes
 export function TrackList({ items }: TrackListProps) {
   const wrapRef = useRef<HTMLDivElement>(null)
-  const [scrollTop, setScrollTop] = useState(0)
   const [viewH, setViewH] = useState(typeof window !== 'undefined' ? window.innerHeight : 800)
+  const [first, setFirst] = useState(0)
 
-  const onScroll = useCallback(() => setScrollTop(window.scrollY), [])
   useEffect(() => {
-    const onResize = () => setViewH(window.innerHeight)
-    onResize()
+    const measure = () => setViewH(window.innerHeight)
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [])
+
+  useEffect(() => {
+    let raf = 0
+    const onScroll = () => {
+      if (raf) return
+      raf = requestAnimationFrame(() => {
+        raf = 0
+        const el = wrapRef.current
+        if (!el) return
+        const rel = Math.max(0, window.scrollY - el.offsetTop)
+        setFirst(Math.max(0, Math.floor(rel / ROW_H) - 4))
+      })
+    }
     window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onResize)
     return () => {
       window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onResize)
+      if (raf) cancelAnimationFrame(raf)
     }
-  }, [onScroll])
+  }, [])
 
   const totalH = items.length * ROW_H
-  /* eslint-disable react-hooks/refs */
-  const wrapTop = wrapRef.current?.offsetTop || 0
-  const rel = Math.max(0, scrollTop - wrapTop)
-  /* eslint-enable react-hooks/refs */
-  const first = Math.max(0, Math.floor(rel / ROW_H) - 4)
-  const last = Math.min(items.length, first + Math.ceil(viewH / ROW_H) + 8)
+  const firstRow = Math.min(first, Math.max(0, items.length - 1))
+  const last = Math.min(items.length, firstRow + Math.ceil(viewH / ROW_H) + 8)
 
   const rows: number[] = []
-  for (let i = first; i < last; i++) rows.push(i)
+  for (let i = firstRow; i < last; i++) rows.push(i)
 
   return (
     <div ref={wrapRef} className="tlist" style={{ height: totalH }}>
