@@ -9,3 +9,9 @@ export const fmtTotal = (sec: number): string => {
   const m = Math.floor((sec % 3600) / 60)
   return h > 0 ? `${h} h ${m} min` : `${m} min`
 }
+
+export const fmtClock = (sec: number): string => {
+  const m = Math.floor(sec / 60)
+  const s = sec % 60
+  return `${m}:${String(s).padStart(2, '0')}`
+}

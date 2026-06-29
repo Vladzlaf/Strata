@@ -103,6 +103,97 @@ body {
   color: var(--accent);
 }
 
+/* ---- stats ------------------------------------------------------------- */
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 24px;
+  margin-top: 14px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-2);
+}
+.stats__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-content: start;
+}
+.stats__cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.stats__k {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+}
+.stats__v {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--accent);
+}
+.stats__sub {
+  font-size: 12px;
+  color: var(--ink-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.stats__h {
+  margin: 0 0 12px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+}
+.stats__bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.stats__bar {
+  display: grid;
+  grid-template-columns: minmax(80px, 130px) 1fr 28px;
+  align-items: center;
+  gap: 10px;
+}
+.stats__bar-name {
+  font-size: 12px;
+  color: var(--ink-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.stats__bar-track {
+  height: 8px;
+  border-radius: 3px;
+  background: var(--bg);
+  overflow: hidden;
+}
+.stats__bar-fill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+.stats__bar-n {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-faint);
+  text-align: right;
+}
+
 /* ---- controls ---------------------------------------------------------- */
 /* zero-height marker right before the sticky bar; drives the glass-on-stick state */
 .controls-sentinel {
@@ -721,6 +812,10 @@ body {
   }
   .masthead {
     padding: 32px 0 22px;
+  }
+  .stats {
+    grid-template-columns: 1fr;
+    gap: 18px;
   }
   /* gallery: stack the cover over the meta, centered */
   .tgal__stage {

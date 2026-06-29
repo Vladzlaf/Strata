@@ -17,9 +17,19 @@ jobs:
           node-version: 22
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_STRATA_MUSIC }}
-          channelId: live
-          projectId: strata-music
+      - name: Deploy to Firebase Hosting
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_STRATA_MUSIC }}
+        run: |
+          printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > "$RUNNER_TEMP/sa.json"
+          export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json"
+          set +e
+          out=$(npx firebase-tools@latest deploy --only hosting --project strata-music --non-interactive 2>&1)
+          code=$?
+          echo "$out"
+          if [ $code -eq 0 ]; then exit 0; fi
+          if echo "$out" | grep -q "is the current active version"; then
+            echo "::notice::No changes to deploy — built site is identical to the live version. Treating as success."
+            exit 0
+          fi
+          exit $code

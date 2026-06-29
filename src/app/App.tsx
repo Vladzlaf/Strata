@@ -1,10 +1,11 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 
 import { ScrollTop } from '@/components'
 import { tracks } from '@/entities/track'
 import { ViewSwitcher } from '@/features/view-switcher'
 import { useFavorites, useStuck, useUrlState, useViewMode } from '@/hooks'
 import { durToSec, fmtTotal } from '@/lib'
+import { StatsPanel } from '@/widgets/stats-panel'
 import { TrackGallery } from '@/widgets/track-gallery'
 import { TrackGrid } from '@/widgets/track-grid'
 import { TrackList } from '@/widgets/track-list'
@@ -37,6 +38,7 @@ export function App() {
   const [view, setView] = useViewMode()
   const [sentinelRef, stuck] = useStuck<HTMLDivElement>()
   const { ids, count } = useFavorites()
+  const [showStats, setShowStats] = useState(false)
 
   // top artists for the filter chips
   const topArtists = useMemo(() => {
@@ -125,6 +127,13 @@ export function App() {
           ★ <span className="chip__n">{count}</span>
         </button>
         <button
+          aria-expanded={showStats}
+          className={`chip chip--stats ${showStats ? 'chip--on' : ''}`}
+          onClick={() => setShowStats((v) => !v)}
+        >
+          stats
+        </button>
+        <button
           className={`chip ${artist === '' ? 'chip--on' : ''}`}
           onClick={() => setParams({ artist: '' })}
         >
@@ -141,6 +150,8 @@ export function App() {
           </button>
         ))}
       </div>
+
+      {showStats ? <StatsPanel /> : null}
 
       {filtered.length === 0 ? (
         <div className="empty">Nothing found. Reset the filter or change your query.</div>
