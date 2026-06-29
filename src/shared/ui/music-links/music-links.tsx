@@ -35,6 +35,22 @@ const SpIcon = () => (
   </svg>
 )
 
+const DlIcon = () => (
+  <svg
+    aria-hidden
+    fill="none"
+    height="15"
+    stroke="currentColor"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth="2"
+    viewBox="0 0 24 24"
+    width="15"
+  >
+    <path d="M12 3v11M8 11l4 4 4-4M5 20h14" />
+  </svg>
+)
+
 export function MusicLinks({ query, labeled, className }: MusicLinksProps) {
   return (
     <span className={`svclinks ${labeled ? 'svclinks--labeled' : ''} ${className ?? ''}`}>
@@ -73,6 +89,16 @@ export function MusicLinks({ query, labeled, className }: MusicLinksProps) {
       >
         <SpIcon />
         {labeled ? <span className="svc__label">Spotify</span> : null}
+      </a>
+      <a
+        aria-label="Download mp3"
+        className="svc svc--dl"
+        href={`ytmp3://${encodeURIComponent(`ytsearch1:${query}`)}`}
+        title="Download mp3 (ytmp3)"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <DlIcon />
+        {labeled ? <span className="svc__label">mp3</span> : null}
       </a>
     </span>
   )

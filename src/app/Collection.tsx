@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 
 import { ScrollTop, Spinner } from '@/components'
 import { fetchTracks, type Track } from '@/entities/track'
+import { ExportMenu } from '@/features/export-menu'
 import { ViewSwitcher } from '@/features/view-switcher'
 import { useFavorites, useStuck, useUrlState, useViewMode } from '@/hooks'
 import { durToSec, fmtTotal, signOutUser } from '@/lib'
@@ -141,6 +142,7 @@ export function Collection() {
               <rect height="6" rx="1" width="4" x="17" y="14" />
             </svg>
           </button>
+          <ExportMenu favoriteIds={ids} tracks={tracks} />
           <button aria-label="Lock" className="statsbtn" title="Lock" onClick={() => signOutUser()}>
             <svg
               aria-hidden
