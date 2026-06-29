@@ -44,10 +44,24 @@ body {
 
 /* ---- auth gate / loading ----------------------------------------------- */
 .gate {
+  position: relative;
   display: grid;
   place-items: center;
   min-height: 100vh;
   padding: 24px;
+  overflow: hidden;
+}
+/* soft colour field behind the glass so the blur has something to refract */
+.gate::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(40% 40% at 28% 32%, rgba(110, 168, 254, 0.28), transparent 70%),
+    radial-gradient(35% 35% at 74% 66%, rgba(110, 168, 254, 0.18), transparent 70%),
+    radial-gradient(30% 30% at 62% 18%, rgba(214, 222, 236, 0.08), transparent 70%);
+  filter: blur(24px);
+  pointer-events: none;
 }
 .loadscreen {
   display: flex;
@@ -76,11 +90,21 @@ body {
   }
 }
 .gate__box {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
   width: 100%;
-  max-width: 320px;
+  max-width: 340px;
+  padding: 32px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  background: rgba(36, 36, 36, 0.45);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   text-align: center;
 }
 .gate__brand {
@@ -107,9 +131,9 @@ body {
 }
 .gate__input {
   padding: 12px 16px;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius);
-  background: var(--bg-2);
+  background: rgba(0, 0, 0, 0.25);
   color: var(--ink);
   font-family: inherit;
   font-size: 15px;
@@ -118,7 +142,7 @@ body {
   transition: border-color 0.15s;
 }
 .gate__input:focus {
-  border-color: var(--accent-dim);
+  border-color: var(--accent);
 }
 .gate__btn {
   display: inline-flex;
