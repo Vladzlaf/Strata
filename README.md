@@ -10,7 +10,8 @@ A personal strata of music — every track from the collection in the order it s
 - **`src/entities/track/model/tracks.json`** — all tracks: `{ n, artist, title, dur, cover }`. Array order = collection chronology; `n` is a continuous 1…N sequence.
 - **`public/covers/NNNN.jpg`** — covers, referenced by each track's `cover` field. Filenames keep their original numbers, so they don't necessarily match `n`.
 - **Three views** — icons, list, and gallery, switchable from the toolbar; the choice is remembered between visits. Gallery flips through tracks with the ← / → arrow keys.
-- **Find on YouTube** — every track links to a YouTube search for `artist title` (no API key, pure static).
+- **Music links** — every track links to a search for `artist title` on YouTube, Yandex Music, and Spotify (no API keys, pure static).
+- **Favorites** — star any track; the list is kept in `localStorage` and survives reloads.
 - **Virtualization** — in the grid and list only visible items are rendered, so 2000+ covers stay smooth.
 - Default/broken covers are replaced with a `♪` placeholder automatically.
 
@@ -21,31 +22,29 @@ pnpm install
 pnpm dev
 ```
 
-Opens at `http://localhost:3000/strata/`.
+Opens at `http://localhost:3000/`.
 
-## Deploy to GitHub Pages
+## Deploy
 
-1. Create a repository named **`strata`** (important — `base` in `vite.config.ts` is set to `/strata/`; if you name it differently, fix it there).
-2. Push the project:
-   ```bash
-   git init
-   git add .
-   git commit -m "strata: initial"
-   git branch -M main
-   git remote add origin https://github.com/USERNAME/strata.git
-   git push -u origin main
-   ```
-3. In the repository: **Settings → Pages → Source → GitHub Actions**.
-4. The `.github/workflows/deploy.yml` workflow builds and publishes on every push.
-5. The site will be at `https://USERNAME.github.io/strata/`.
+The site is hosted on **Firebase Hosting** and auto-deploys on every push to `main` via GitHub Actions (`.github/workflows/firebase-hosting-merge.yml`). Pull requests get a preview deploy from `firebase-hosting-pull-request.yml`.
 
-### Deploy to a user page or custom domain
+Live: **https://strata-music.web.app**
 
-If you host on `USERNAME.github.io` (root) or your own domain, change in `vite.config.ts`:
+### Manual deploy
 
-```js
-base: '/'
+```bash
+pnpm build
+npx firebase-tools deploy --only hosting
 ```
+
+### Set up CI on your own Firebase project
+
+1. Create a Firebase project with a Hosting site and put its id in `.firebaserc`.
+2. Run `firebase init hosting:github` — it creates the `FIREBASE_SERVICE_ACCOUNT_*` repository secret the workflows use (or add it manually under **Settings → Secrets and variables → Actions**).
+
+### Base path
+
+`base` in `vite.config.ts` is `/` by default — Firebase serves the app from the root. It switches to `/strata/` only when `GH_PAGES=1` is set, which the legacy `pnpm deploy` (gh-pages) script does. So no config change is needed for Firebase; the `/strata/` path exists only for an optional GitHub Pages build.
 
 ## Update the collection
 
