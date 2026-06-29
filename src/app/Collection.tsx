@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { ScrollTop, Spinner } from '@/components'
+import { ScrollTop, Spinner, Toaster } from '@/components'
 import { fetchTracks, type Track } from '@/entities/track'
 import { ExportMenu } from '@/features/export-menu'
 import { ViewSwitcher } from '@/features/view-switcher'
@@ -222,6 +222,7 @@ export function Collection() {
       </footer>
 
       <ScrollTop />
+      <Toaster />
     </div>
   )
 }

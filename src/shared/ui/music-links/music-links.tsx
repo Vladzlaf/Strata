@@ -1,4 +1,6 @@
-import { spotifySearchUrl, yandexMusicSearchUrl, youtubeSearchUrl } from '@/lib'
+import { useState } from 'react'
+
+import { spotifySearchUrl, toast, yandexMusicSearchUrl, youtubeSearchUrl } from '@/lib'
 
 interface MusicLinksProps {
   query: string
@@ -51,7 +53,24 @@ const DlIcon = () => (
   </svg>
 )
 
+const CheckIcon = () => (
+  <svg
+    aria-hidden
+    fill="none"
+    height="15"
+    stroke="currentColor"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth="2"
+    viewBox="0 0 24 24"
+    width="15"
+  >
+    <path d="M5 13l4 4 9-9" />
+  </svg>
+)
+
 export function MusicLinks({ query, labeled, className }: MusicLinksProps) {
+  const [sent, setSent] = useState(false)
   return (
     <span className={`svclinks ${labeled ? 'svclinks--labeled' : ''} ${className ?? ''}`}>
       <a
@@ -92,13 +111,18 @@ export function MusicLinks({ query, labeled, className }: MusicLinksProps) {
       </a>
       <a
         aria-label="Download mp3"
-        className="svc svc--dl"
+        className={`svc svc--dl ${sent ? 'svc--ok' : ''}`}
         href={`ytmp3://${encodeURIComponent(`ytsearch1:${query}`)}`}
-        title="Download mp3 (ytmp3)"
-        onClick={(e) => e.stopPropagation()}
+        title="Send to mp3 downloader"
+        onClick={(e) => {
+          e.stopPropagation()
+          setSent(true)
+          toast(`↓ Sent to downloader: ${query}`)
+          window.setTimeout(() => setSent(false), 1500)
+        }}
       >
-        <DlIcon />
-        {labeled ? <span className="svc__label">mp3</span> : null}
+        {sent ? <CheckIcon /> : <DlIcon />}
+        {labeled ? <span className="svc__label">{sent ? 'sent' : 'mp3'}</span> : null}
       </a>
     </span>
   )

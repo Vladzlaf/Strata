@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 set -e
 
+HERE="$(cd "$(dirname "$0")" && pwd)"
 APP="$HOME/Applications/ytmp3.app"
-SRC="$(cd "$(dirname "$0")" && pwd)/ytmp3-handler.applescript"
+SRC="$HERE/ytmp3-handler.applescript"
 PB=/usr/libexec/PlistBuddy
 PL="$APP/Contents/Info.plist"
+
+mkdir -p "$HOME/.config/yt-dlp"
+cp "$HERE/strata-dl.sh" "$HOME/.config/yt-dlp/strata-dl.sh"
+chmod +x "$HOME/.config/yt-dlp/strata-dl.sh"
 
 mkdir -p "$HOME/Applications"
 rm -rf "$APP"

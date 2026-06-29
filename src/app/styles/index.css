@@ -125,6 +125,24 @@ body {
   border-top-color: var(--accent);
   animation: spin 0.7s linear infinite;
 }
+.Toastify {
+  --toastify-color-dark: var(--bg-2);
+  --toastify-text-color-dark: var(--ink);
+  --toastify-font-family: 'Space Mono', monospace;
+  --toastify-toast-bd-radius: var(--radius);
+  --toastify-color-progress-dark: var(--accent);
+  --toastify-toast-min-height: 48px;
+}
+.Toastify__toast.strata-toast {
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--accent);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.45);
+  font-size: 13px;
+}
+.strata-toast .Toastify__toast-icon {
+  width: 20px;
+  color: var(--accent);
+}
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -834,6 +852,9 @@ body {
   color: #1db954;
 }
 .svc--dl:hover {
+  color: var(--accent);
+}
+.svc--ok {
   color: var(--accent);
 }
 .svc__label {
