@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { ScrollTop } from '@/components'
+import { ScrollTop, Spinner } from '@/components'
 import { fetchTracks, type Track } from '@/entities/track'
 import { ViewSwitcher } from '@/features/view-switcher'
 import { useFavorites, useStuck, useUrlState, useViewMode } from '@/hooks'
@@ -92,7 +92,12 @@ export function Collection() {
 
   const ActiveView = VIEWS[view]
 
-  if (status === 'loading') return <div className="loadscreen">loading collection…</div>
+  if (status === 'loading')
+    return (
+      <div className="loadscreen">
+        <Spinner />
+      </div>
+    )
   if (status === 'error')
     return (
       <div className="loadscreen">
