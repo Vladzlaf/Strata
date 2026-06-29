@@ -24,16 +24,16 @@ export function AuthGate() {
     <div className="gate">
       <form className="gate__box" onSubmit={submit}>
         <h1 className="gate__brand">STRATA</h1>
-        <p className="gate__hint">Enter the passphrase to open the collection.</p>
+        <p className="gate__hint">Enter the password to open the collection.</p>
         <input
           autoFocus
           className="gate__input"
-          placeholder="passphrase"
+          placeholder="password"
           type="password"
           value={pw}
           onChange={(e) => setPw(e.target.value)}
         />
-        {err ? <p className="gate__err">Wrong passphrase.</p> : null}
+        {err ? <p className="gate__err">Wrong password.</p> : null}
         <button className="gate__btn" disabled={busy || !pw} type="submit">
           {busy ? 'checking…' : 'enter'}
         </button>
