@@ -80,20 +80,36 @@ export function App() {
           <h1 className="wordmark">STRATA</h1>
           <p className="tagline">Every track in the order it settled.</p>
         </div>
-        <dl className="counters">
-          <div>
-            <dt>records</dt>
-            <dd>{tracks.length.toLocaleString('en')}</dd>
-          </div>
-          <div>
-            <dt>shown</dt>
-            <dd>{filtered.length.toLocaleString('en')}</dd>
-          </div>
-          <div>
-            <dt>playtime</dt>
-            <dd>{fmtTotal(totalSec)}</dd>
-          </div>
-        </dl>
+        <div className="masthead__meta">
+          <dl className="counters">
+            <div>
+              <dt>records</dt>
+              <dd>{tracks.length.toLocaleString('en')}</dd>
+            </div>
+            <div>
+              <dt>shown</dt>
+              <dd>{filtered.length.toLocaleString('en')}</dd>
+            </div>
+            <div>
+              <dt>playtime</dt>
+              <dd>{fmtTotal(totalSec)}</dd>
+            </div>
+          </dl>
+          <button
+            aria-expanded={showStats}
+            aria-label="Toggle stats"
+            className={`statsbtn ${showStats ? 'statsbtn--on' : ''}`}
+            title="Stats"
+            onClick={() => setShowStats((v) => !v)}
+          >
+            <svg aria-hidden fill="currentColor" height="16" viewBox="0 0 24 24" width="16">
+              <rect height="9" rx="1" width="4" x="3" y="11" />
+              <rect height="14" rx="1" width="4" x="10" y="6" />
+              <rect height="6" rx="1" width="4" x="17" y="14" />
+            </svg>
+          </button>
+        </div>
+        {showStats ? <StatsPanel /> : null}
       </header>
 
       <div ref={sentinelRef} aria-hidden className="controls-sentinel" />
@@ -127,13 +143,6 @@ export function App() {
           ★ <span className="chip__n">{count}</span>
         </button>
         <button
-          aria-expanded={showStats}
-          className={`chip chip--stats ${showStats ? 'chip--on' : ''}`}
-          onClick={() => setShowStats((v) => !v)}
-        >
-          stats
-        </button>
-        <button
           className={`chip ${artist === '' ? 'chip--on' : ''}`}
           onClick={() => setParams({ artist: '' })}
         >
@@ -150,8 +159,6 @@ export function App() {
           </button>
         ))}
       </div>
-
-      {showStats ? <StatsPanel /> : null}
 
       {filtered.length === 0 ? (
         <div className="empty">Nothing found. Reset the filter or change your query.</div>
