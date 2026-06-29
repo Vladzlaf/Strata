@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 
+import { ScrollTop } from '@/components'
 import { tracks } from '@/entities/track'
 import { ViewSwitcher } from '@/features/view-switcher'
-import { useStuck, useViewMode } from '@/hooks'
+import { useFavorites, useStuck, useUrlState, useViewMode } from '@/hooks'
 import { durToSec, fmtTotal } from '@/lib'
 import { TrackGallery } from '@/widgets/track-gallery'
 import { TrackGrid } from '@/widgets/track-grid'
@@ -23,12 +24,19 @@ const SORTS: [SortKey, string][] = [
   ['longest', 'longest'],
 ]
 
+const SORT_KEYS = SORTS.map(([k]) => k)
+
 export function App() {
-  const [q, setQ] = useState('')
-  const [artist, setArtist] = useState('')
-  const [sort, setSort] = useState<SortKey>('strata') // strata = original order
+  const [params, setParams] = useUrlState({ q: '', artist: '', sort: 'strata', fav: '' })
+  const q = params.q
+  const artist = params.artist
+  const sort: SortKey = SORT_KEYS.includes(params.sort as SortKey)
+    ? (params.sort as SortKey)
+    : 'strata'
+  const favOnly = params.fav === '1'
   const [view, setView] = useViewMode()
   const [sentinelRef, stuck] = useStuck<HTMLDivElement>()
+  const { ids, count } = useFavorites()
 
   // top artists for the filter chips
   const topArtists = useMemo(() => {
@@ -44,6 +52,7 @@ export function App() {
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase()
     let r = tracks.filter((t) => {
+      if (favOnly && !ids.has(t.n)) return false
       if (artist && t.artist !== artist) return false
       if (!needle) return true
       return (
@@ -56,7 +65,7 @@ export function App() {
     else if (sort === 'longest') r = [...r].sort((a, b) => durToSec(b.dur) - durToSec(a.dur))
     // 'strata' keeps original json order
     return r
-  }, [q, artist, sort])
+  }, [q, artist, sort, favOnly, ids])
 
   const totalSec = useMemo(() => filtered.reduce((s, t) => s + durToSec(t.dur), 0), [filtered])
 
@@ -92,14 +101,14 @@ export function App() {
           placeholder="search by title or artist…"
           type="search"
           value={q}
-          onChange={(e) => setQ(e.target.value)}
+          onChange={(e) => setParams({ q: e.target.value })}
         />
         <div className="sortgroup">
           {SORTS.map(([k, label]) => (
             <button
               key={k}
               className={`chip ${sort === k ? 'chip--on' : ''}`}
-              onClick={() => setSort(k)}
+              onClick={() => setParams({ sort: k })}
             >
               {label}
             </button>
@@ -109,7 +118,16 @@ export function App() {
       </div>
 
       <div className="artistbar">
-        <button className={`chip ${artist === '' ? 'chip--on' : ''}`} onClick={() => setArtist('')}>
+        <button
+          className={`chip chip--fav ${favOnly ? 'chip--on' : ''}`}
+          onClick={() => setParams({ fav: favOnly ? '' : '1' })}
+        >
+          ★ <span className="chip__n">{count}</span>
+        </button>
+        <button
+          className={`chip ${artist === '' ? 'chip--on' : ''}`}
+          onClick={() => setParams({ artist: '' })}
+        >
           all artists
         </button>
         {topArtists.map(([a, n]) => (
@@ -117,7 +135,7 @@ export function App() {
             key={a}
             className={`chip ${artist === a ? 'chip--on' : ''}`}
             title={`${n} tracks`}
-            onClick={() => setArtist(artist === a ? '' : a)}
+            onClick={() => setParams({ artist: artist === a ? '' : a })}
           >
             {a} <span className="chip__n">{n}</span>
           </button>
@@ -135,6 +153,8 @@ export function App() {
           Strata — a personal archive. Covers and order taken from the original collection.
         </span>
       </footer>
+
+      <ScrollTop />
     </div>
   )
 }

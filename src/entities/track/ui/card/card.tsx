@@ -1,4 +1,4 @@
-import { Cover, YoutubeLink } from '@/components'
+import { Cover, FavoriteStar, MusicLinks } from '@/components'
 import { BASE } from '@/shared/config'
 
 import type { Track } from '../../model/track.interface'
@@ -13,7 +13,8 @@ export function Card({ t }: CardProps) {
       <div className="card__art">
         <Cover alt={`${t.artist} — ${t.title}`} src={`${BASE}${t.cover}`} />
         <span className="card__depth">{String(t.n).padStart(4, '0')}</span>
-        <YoutubeLink className="card__yt" query={`${t.artist} ${t.title}`} />
+        <FavoriteStar className="card__fav" n={t.n} />
+        <MusicLinks className="card__links" query={`${t.artist} ${t.title}`} />
       </div>
       <figcaption className="card__meta">
         <span className="card__title" title={t.title}>

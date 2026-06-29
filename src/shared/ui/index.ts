@@ -1,2 +1,4 @@
 export * from './cover/cover'
-export * from './youtube-link/youtube-link'
+export * from './favorite-star/favorite-star'
+export * from './music-links/music-links'
+export * from './scroll-top/scroll-top'

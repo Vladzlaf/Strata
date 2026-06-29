@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { Cover, YoutubeLink } from '@/components'
+import { Cover, FavoriteStar, MusicLinks } from '@/components'
 import type { Track } from '@/entities/track'
 import { BASE } from '@/shared/config'
 
@@ -57,11 +57,14 @@ export function TrackGallery({ items }: TrackGalleryProps) {
           <h2 className="tgal__title">{active.title}</h2>
           <p className="tgal__artist">{active.artist || '—'}</p>
           {active.dur && <p className="tgal__dur">{active.dur}</p>}
-          <YoutubeLink
-            className="tgal__yt"
-            label="Find on YouTube"
-            query={`${active.artist} ${active.title}`}
-          />
+          <div className="tgal__actions">
+            <FavoriteStar className="tgal__fav" n={active.n} />
+            <MusicLinks
+              labeled
+              className="tgal__links"
+              query={`${active.artist} ${active.title}`}
+            />
+          </div>
         </div>
       </div>
       <div ref={stripRef} className="tgal__strip">

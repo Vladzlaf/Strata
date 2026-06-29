@@ -518,8 +518,13 @@ body {
   border-color: var(--accent);
 }
 
-/* ---- youtube link ------------------------------------------------------ */
-.yt {
+/* ---- service links (YouTube / Yandex Music) ---------------------------- */
+.svclinks {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.svc {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -528,55 +533,167 @@ body {
   transition:
     color 0.14s,
     background 0.14s,
-    border-color 0.14s,
-    opacity 0.14s;
+    border-color 0.14s;
 }
-.yt:hover {
+.svc--yt:hover {
   color: #ff3d3d;
 }
-.yt__label {
+.svc--ym:hover {
+  color: #ffcc00;
+}
+.svc__label {
   font-size: 13px;
 }
 
 /* grid: overlay on the cover, revealed on hover */
-.card__yt {
+.card__links {
   position: absolute;
   top: 6px;
   right: 6px;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 7px;
+  gap: 4px;
+  padding: 4px 5px;
+  border-radius: var(--radius-sm);
   background: rgba(26, 26, 26, 0.72);
   color: var(--ink);
   backdrop-filter: blur(2px);
   opacity: 0;
+  transition: opacity 0.14s;
 }
-.card__art:hover .card__yt,
-.card__yt:focus-visible {
+.card__art:hover .card__links,
+.card__links:focus-within {
   opacity: 1;
 }
 
-/* list: trailing icon */
-.tlist__yt {
+/* list: trailing icons */
+.tlist__links {
   flex: none;
-  justify-content: center;
-  width: 26px;
+  gap: 8px;
 }
 
-/* gallery: labeled pill */
-.tgal__yt {
-  align-self: flex-start;
+/* gallery: labeled pills */
+.tgal__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin-top: 6px;
+}
+.svclinks--labeled {
+  gap: 8px;
+}
+.svclinks--labeled .svc {
   padding: 8px 14px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--bg);
   color: var(--ink);
 }
-.tgal__yt:hover {
-  color: #ff3d3d;
+.svclinks--labeled .svc--yt:hover {
   border-color: #ff3d3d;
+}
+.svclinks--labeled .svc--ym:hover {
+  border-color: #ffcc00;
+}
+
+/* ---- favorite star ----------------------------------------------------- */
+.fav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-dim);
+  cursor: pointer;
+  transition:
+    color 0.14s,
+    opacity 0.14s,
+    transform 0.1s;
+}
+.fav:hover {
+  color: var(--ink);
+}
+.fav:active {
+  transform: scale(0.88);
+}
+.fav svg path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linejoin: round;
+}
+.fav--on {
+  color: var(--accent);
+}
+.fav--on svg path {
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+/* grid: overlay top-left, always shown once favorited */
+.card__fav {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  background: rgba(26, 26, 26, 0.72);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+}
+.card__art:hover .card__fav,
+.card__fav:focus-visible,
+.card__fav.fav--on {
+  opacity: 1;
+}
+
+.tlist__fav {
+  flex: none;
+}
+
+.tgal__fav {
+  width: 34px;
+  height: 34px;
+}
+.tgal__fav svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ---- scroll to top ----------------------------------------------------- */
+.scrolltop {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: rgba(36, 36, 36, 0.6);
+  color: var(--ink);
+  cursor: pointer;
+  backdrop-filter: blur(14px) saturate(160%);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transition:
+    color 0.14s,
+    border-color 0.14s,
+    transform 0.14s;
+}
+.scrolltop:hover {
+  color: var(--accent);
+  border-color: var(--accent-dim);
+  transform: translateY(-2px);
+}
+
+/* ---- favorites chip ---------------------------------------------------- */
+.chip--fav {
+  color: var(--accent);
+}
+.chip--fav.chip--on {
+  color: #0e1726;
 }
 
 /* ---- motion / a11y ----------------------------------------------------- */
@@ -612,7 +729,7 @@ body {
     align-items: center;
     text-align: center;
   }
-  .tgal__yt {
+  .tgal__actions {
     align-self: center;
   }
 }
