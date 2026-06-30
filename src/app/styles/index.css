@@ -1154,3 +1154,28 @@ body {
     display: none;
   }
 }
+
+@media (hover: none) and (pointer: coarse) {
+  .svc--dl {
+    display: none;
+  }
+  .tlist__row {
+    gap: 6px;
+  }
+  .tlist__links {
+    gap: 2px;
+  }
+  .tlist__fav,
+  .tlist__links .svc {
+    padding: 9px;
+  }
+  .tlist__fav svg,
+  .tlist__links .svc svg {
+    width: 19px;
+    height: 19px;
+  }
+  .card__links,
+  .card__fav {
+    opacity: 1;
+  }
+}
