@@ -14,6 +14,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "upload-tracks": "node scripts/upload-tracks.mjs",
+    "enrich-previews": "node scripts/enrich-previews.mjs",
     "deploy": "GH_PAGES=1 pnpm build && gh-pages -d dist"
   },
   "dependencies": {

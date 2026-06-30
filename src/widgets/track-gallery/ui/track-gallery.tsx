@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { Cover, FavoriteStar, MusicLinks } from '@/components'
+import { Cover, FavoriteStar, MusicLinks, PreviewButton } from '@/components'
 import type { Track } from '@/entities/track'
 import { BASE } from '@/shared/config'
 
@@ -48,6 +48,9 @@ export function TrackGallery({ items }: TrackGalleryProps) {
       <div className="tgal__stage">
         <div className="tgal__cover">
           <Cover alt={`${active.artist} — ${active.title}`} src={`${BASE}${active.cover}`} />
+          {active.preview ? (
+            <PreviewButton className="tgal__play" n={active.n} url={active.preview} />
+          ) : null}
         </div>
         <div className="tgal__meta">
           <span className="tgal__num">{String(active.n).padStart(4, '0')}</span>

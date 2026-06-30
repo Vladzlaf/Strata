@@ -1,6 +1,7 @@
 export * from './cover/cover'
 export * from './favorite-star/favorite-star'
 export * from './music-links/music-links'
+export * from './preview-button/preview-button'
 export * from './scroll-top/scroll-top'
 export * from './spinner/spinner'
 export * from './toaster/toaster'

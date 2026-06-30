@@ -5,4 +5,5 @@ export interface Track {
   dur: string
   cover: string
   yt?: string
+  preview?: string
 }

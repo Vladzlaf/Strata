@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { Cover, FavoriteStar, MusicLinks } from '@/components'
+import { Cover, FavoriteStar, MusicLinks, PreviewButton } from '@/components'
 import type { Track } from '@/entities/track'
 import { BASE } from '@/shared/config'
 
@@ -57,6 +57,7 @@ export function TrackList({ items }: TrackListProps) {
             <span className="tlist__n">{String(t.n).padStart(4, '0')}</span>
             <span className="tlist__thumb">
               <Cover alt={`${t.artist} — ${t.title}`} src={`${BASE}${t.cover}`} />
+              {t.preview ? <PreviewButton className="tlist__play" n={t.n} url={t.preview} /> : null}
             </span>
             <span className="tlist__title" title={t.title}>
               {t.title}

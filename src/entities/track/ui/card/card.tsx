@@ -1,6 +1,6 @@
 import { memo } from 'react'
 
-import { Cover, FavoriteStar, MusicLinks } from '@/components'
+import { Cover, FavoriteStar, MusicLinks, PreviewButton } from '@/components'
 import { BASE } from '@/shared/config'
 
 import type { Track } from '../../model/track.interface'
@@ -14,6 +14,7 @@ export const Card = memo(({ t }: CardProps) => (
     <div className="card__art">
       <Cover alt={`${t.artist} — ${t.title}`} src={`${BASE}${t.cover}`} />
       <span className="card__depth">{String(t.n).padStart(4, '0')}</span>
+      {t.preview ? <PreviewButton className="card__play" n={t.n} url={t.preview} /> : null}
       <FavoriteStar className="card__fav" n={t.n} />
       <MusicLinks className="card__links" query={`${t.artist} ${t.title}`} />
     </div>
