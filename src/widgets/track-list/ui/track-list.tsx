@@ -57,7 +57,6 @@ export function TrackList({ items }: TrackListProps) {
             <span className="tlist__n">{String(t.n).padStart(4, '0')}</span>
             <span className="tlist__thumb">
               <Cover alt={`${t.artist} — ${t.title}`} src={`${BASE}${t.cover}`} />
-              {t.preview ? <PreviewButton className="tlist__play" n={t.n} url={t.preview} /> : null}
             </span>
             <span className="tlist__title" title={t.title}>
               {t.title}
@@ -65,6 +64,7 @@ export function TrackList({ items }: TrackListProps) {
             <span className="tlist__artist" title={t.artist}>
               {t.artist || '—'}
             </span>
+            {t.preview ? <PreviewButton className="tlist__play" n={t.n} url={t.preview} /> : null}
             <FavoriteStar className="tlist__fav" n={t.n} />
             <MusicLinks className="tlist__links" query={`${t.artist} ${t.title}`} />
             <span className="tlist__dur">{t.dur}</span>

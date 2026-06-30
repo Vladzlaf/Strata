@@ -1034,7 +1034,6 @@ body {
   cursor: pointer;
 }
 .card__play,
-.tlist__play,
 .tgal__play {
   position: absolute;
   top: 50%;
@@ -1053,14 +1052,9 @@ body {
   opacity: 1;
 }
 .tlist__play {
-  width: 26px;
-  height: 26px;
-  opacity: 0;
-  transition: opacity 0.14s;
-}
-.tlist__row:hover .tlist__play,
-.tlist__play.preview--on {
-  opacity: 1;
+  flex: none;
+  width: 28px;
+  height: 28px;
 }
 .tgal__play {
   width: 56px;
