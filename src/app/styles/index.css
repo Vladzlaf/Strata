@@ -304,6 +304,7 @@ body {
 
 .masthead__meta {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-end;
   gap: 14px;
 }

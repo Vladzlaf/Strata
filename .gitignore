@@ -4,6 +4,7 @@ dist
 *.log
 .vite
 .firebase
+CLAUDE.md
 
 # secrets / private data — must NOT ship to a public repo
 .env.local
